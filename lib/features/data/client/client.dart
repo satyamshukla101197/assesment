@@ -7,7 +7,7 @@ import 'package:supdup/features/data/model/data_model.dart';
 part 'client.g.dart';
 
 /// Remote client for interacting with remote server
-@RestApi(baseUrl: "https://picsum.photos/v2/")
+@RestApi(baseUrl: "https://picsum.photos/")
 abstract class RestClient {
   /// flutter pub run build_runner build --delete-conflicting-outputs
   factory RestClient(final Dio dio, final LocalDataSource localDataSource) {

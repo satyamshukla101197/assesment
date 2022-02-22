@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   double? long;
   @override
   void initState() {
-    //checkPermission();
+    checkPermission();
     _getLocation();
     super.initState();
   }
