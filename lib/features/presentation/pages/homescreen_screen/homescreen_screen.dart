@@ -25,10 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
   String? image;
   Position? position;
   Uint8List? _bytesImage;
+  LatLng initPosition = LatLng(0, 0);
    LatLng currentPostion=LatLng(0.0, 0.0);
   LocationPermission permission = LocationPermission.denied;
-
-
   double? lat;
   double? long;
   @override
@@ -42,12 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Argument? argument;
 
   _getLocation()async {
-    print("hii");
-    position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      currentPostion =new LatLng(position!.latitude, position!.longitude);
-      lat=currentPostion.latitude;
-      long=currentPostion.longitude;
+    await Geolocator.getCurrentPosition().then((currLocation) {
+      setState(() {
+        currentPostion =
+        new LatLng(currLocation.latitude, currLocation.longitude);
+      });
     });
   }
 
@@ -58,12 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     argument =ModalRoute.of(context)!.settings.arguments as Argument;
+    print('jksdffdjvc');
+    print(permission);
+    print("Current Location --------> " +
+        currentPostion.latitude.toString() +
+        " " +
+        currentPostion.longitude.toString());
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            // leading: Container(
-            //  child: Image.file(File(argument!.image)),
-            // ),
             title: Text(argument!.name),
           ),
           body:_getBody(),
@@ -76,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Container(
         child: Column(
           children: <Widget>[
-            _getGoogleMap(),
+            checkReady(currentPostion, permission)? Center(child: CircularProgressIndicator()):_getGoogleMap(),
             CustomSpacerWidget(height: 20.0,),
             _getApiButton()
           ],
@@ -134,18 +135,27 @@ class _HomeScreenState extends State<HomeScreen> {
  }
 
   //checkPersion before initialize the map
-   checkPermission() async{
-     LocationPermission permission;
-     permission = await Geolocator.checkPermission();
-     if (permission == LocationPermission.denied) {
-       permission = await Geolocator.requestPermission();
-       if (permission == LocationPermission.deniedForever) {
-         return Future.error('Location Not Available');
-       }
-     } else {
-       throw Exception('Error');
-     }
-     return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  checkPermission() async{
+    //LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    } else {
+      throw Exception('Error');
+    }
+    return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  }
+
+  //Check permission status and currentPosition before render the map
+  bool checkReady(LatLng? x, LocationPermission? y) {
+    if (x == initPosition || y == LocationPermission.denied || y == LocationPermission.deniedForever) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
