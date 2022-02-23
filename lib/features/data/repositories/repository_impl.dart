@@ -18,32 +18,26 @@ class RepositoryImpl extends Repository {
       required this.localDataSource,
       required this.remoteDataSource});
   @override
-  Future<Either<Failure, DataEntityResult>> getData() async {
+  Future<Either<Failure, DataEntity>> getData() async {
     if (await networkInfo.isConnected) {
       try {
         final dataDetails = await remoteDataSource.getData();
         final dataResult = List<DataEntityResult>.empty(growable: true);
 
-        // dataDetails.Result!.forEach((element) {
-        //   dataResult.add(DataEntityResult(
-        //       id: element.id,
-        //     author: element.author,
-        //     width: element.width,
-        //     height: element.height,
-        //     url: element.url,
-        //     download_url: element.download_url
-        //   ));
-        // });
+        dataDetails.Result!.forEach((element) {
+          dataResult.add(DataEntityResult(
+              id: element.id,
+            author: element.author,
+            width: element.width,
+            height: element.height,
+            url: element.url,
+            download_url: element.download_url
+          ));
+        });
 
 
-        return Right(DataEntityResult(
-            id: dataDetails.id,
-            author: dataDetails.author,
-            width: dataDetails.width,
-            height: dataDetails.height,
-            url: dataDetails.url,
-            download_url: dataDetails.download_url
-
+        return Right(DataEntity(
+          Result: dataResult
         ));
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

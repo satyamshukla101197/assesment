@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:supdup/core/error/failures.dart';
 import 'package:supdup/core/usecse/usecase.dart';
 import 'package:supdup/core/utils/constants.dart';
+import 'package:supdup/features/data/model/data_model.dart';
 import 'package:supdup/features/domain/entities/data_entity.dart';
 import 'package:supdup/features/domain/use_cases/data_use_case.dart';
 

@@ -15,7 +15,7 @@ class SecondScreen extends StatefulWidget {
 
 class _SecondScreenState extends State<SecondScreen> {
   List image=["https://unsplash.com/photos/93Ep1dhTd2s",];
-  List<DataEntityResult>? dataEntity;
+  DataEntity? dataEntity;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -34,7 +34,7 @@ class _SecondScreenState extends State<SecondScreen> {
               //Kill Loader
               Navigation.back(context);
               if (state.dataEntity != null) {
-                dataEntity!.add(state.dataEntity!);
+                dataEntity=state.dataEntity;
 
               }
             }
@@ -67,7 +67,7 @@ class _SecondScreenState extends State<SecondScreen> {
                     children: <Widget>[
                       _getImage(index: index),
                       CustomSpacerWidget(height: 20.0,),
-                      dataEntity==null?Text("lejandro Escamilla"):Text(dataEntity![index].author!)
+                      dataEntity==null?Text("lejandro Escamilla"):Text(dataEntity!.Result![index].author!)
                     ],
                   )
               ),
@@ -79,7 +79,7 @@ class _SecondScreenState extends State<SecondScreen> {
 
   _getImage({required int index}) {
     return Container(
-      child:dataEntity==null?Image.asset(ImageConstants.IMAGE): Image.asset(dataEntity![index].url!),
+      child:dataEntity==null?Image.asset(ImageConstants.IMAGE): Image.asset(dataEntity!.Result![index].url!),
     );
   }
 }

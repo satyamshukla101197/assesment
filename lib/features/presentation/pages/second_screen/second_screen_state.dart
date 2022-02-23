@@ -23,7 +23,7 @@ class SecondScreenErrorState extends SecondScreenState {
 }
 
 class SecondScreenLoadedState extends SecondScreenState {
-  final DataEntityResult? dataEntity;
+  final DataEntity? dataEntity;
   SecondScreenLoadedState({ this.dataEntity,});
 
   @override

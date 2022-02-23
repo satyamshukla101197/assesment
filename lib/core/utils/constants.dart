@@ -6,7 +6,7 @@ class Constants {
   static const String DB_NAME = "app.db";
   static const String APP_NAME = "assignment";
   static const String AUTHORIZATION = "Authorization";
-  static const String API_DATA = "lista";
+  static const String API_DATA = "list";
   static const String ERROR_NO_INTERNET =
       "Please check your internet connection";
   static const String ERROR_UNKNOWN = "Unknown error occurred";

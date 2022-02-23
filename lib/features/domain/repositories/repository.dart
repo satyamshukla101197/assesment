@@ -5,5 +5,5 @@ import 'package:supdup/features/domain/entities/data_entity.dart';
 abstract class Repository {
 
 
-  Future<Either<Failure, DataEntityResult>> getData();
+  Future<Either<Failure, DataEntity>> getData();
 }

@@ -9,7 +9,7 @@ import 'package:supdup/features/data/model/data_model.dart';
 
 /// Abstract class to get/push data from Remote Server
 abstract class RemoteDataSource {
-  Future<DataModelResult> getData();
+  Future<DataModel> getData();
 }
 
 /// Implementation class to get/push data from Remote Server
@@ -19,7 +19,7 @@ class RemoteDataSourceImpl extends RemoteDataSource {
   RemoteDataSourceImpl({required this.client});
 
   @override
-  Future<DataModelResult> getData() async{
+  Future<DataModel> getData() async{
     try {
       return await client.getData();
     } on DioError catch (e) {
